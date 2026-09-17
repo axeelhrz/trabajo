@@ -8,7 +8,6 @@ import {
   type ContactStatus,
   type Search,
 } from '../types'
-import { PlacesSuggestions } from './PlacesSuggestions'
 
 interface SearchWorkspaceProps {
   search: Search
@@ -96,16 +95,8 @@ export function SearchWorkspace({
         Query: <span>{search.mapsQuery}</span>
       </p>
 
-      <PlacesSuggestions
-        mapsQuery={search.mapsQuery}
-        alreadyContacted={search.contacts.map((c) => c.empresa)}
-        onContact={(data) => {
-          onAddContact(data)
-        }}
-      />
-
       <section className="add-card">
-        <h3>{editingId ? 'Editar empresa' : 'Anotar empresa manual'}</h3>
+        <h3>{editingId ? 'Editar empresa' : 'Anotar empresa contactada'}</h3>
         <form className="contact-form" onSubmit={submit}>
           <label>
             Nombre de la empresa *
@@ -114,6 +105,7 @@ export function SearchWorkspace({
               value={form.empresa}
               onChange={(e) => setForm({ ...form, empresa: e.target.value })}
               placeholder="Ej. Taller López"
+              autoFocus
             />
           </label>
 
@@ -210,14 +202,14 @@ export function SearchWorkspace({
 
       <section className="contacts-section">
         <div className="section-heading row">
-          <h2>Empresas que ya contactaste</h2>
+          <h2>Empresas de esta búsqueda</h2>
           <span>{sorted.length}</span>
         </div>
 
         {sorted.length === 0 ? (
           <div className="empty-state soft">
             <p>Todavía no anotaste ninguna empresa.</p>
-            <p>Usá la lista de reseñas de arriba o cargá una manual.</p>
+            <p>Abrí Maps, contactá y cargala acá con el resultado.</p>
           </div>
         ) : (
           <ul className="contact-list">
